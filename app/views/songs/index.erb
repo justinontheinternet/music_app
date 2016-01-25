@@ -1,9 +1,13 @@
+<div class="page-header">
+  <h1>Song Wall   <small><a href="/songs/new_song">Add your song</a></small></h1>
+</div>
+
 <% @songs.each do |song| %>
-  <div class="song">
+  <div class="panel panel-primary">
     <h3><%= song.title %> <small>(by: <%= song.author %>)</small></h3>
     <p>
-      <%= song.url %>
+      <a href="<%= song.url %>"><%= song.url %></a>
     </p>
   </div>
 <% end %>
-<a href="/songs/new_song">Add your favourite song!</a>
+<!-- <h2><a href="/songs/new_song">Add your favourite song!</a></h2> -->
