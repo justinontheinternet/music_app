@@ -7,7 +7,8 @@
   <div class="panel panel-primary">
     <h3><%= song.title %> <small>(by: <%= song.author %>)</small></h3>
     <p>
-      <button type="submit" class="btn btn-default">Upvotes:</button><%= Upvote.where(song_id: song.id).count %>
+      <form method="post" action="/songs/<%= song.id %>/upvote">
+      <button type="submit" class="btn btn-default">Upvotes:</button></form><%= Upvote.where(song_id: song.id).count %>
       <a href="<%= song.url %>"><%= song.url %></a>
     </p>
   </div>

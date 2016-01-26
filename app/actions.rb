@@ -12,8 +12,8 @@ end
 
 # List all songs
 get '/songs' do
-    @songs = Song.all
-    erb :'songs/index'
+  @songs = Song.all.joins('LEFT JOIN upvotes ON (songs.id = upvotes.song_id)').group("songs.id").order("COUNT(upvotes.song_id) DESC")
+  erb :'songs/index'
 end
 
 # If user is logged in, he can post. If not, home page.
@@ -40,6 +40,21 @@ post '/songs' do
   else
     redirect '/'
   end
+end
+
+# gets :id param from action in songs/index.
+#so address is actually /songs/(song.id)/upvote
+post '/songs/:id/upvote' do
+  user_id = current_user.id
+  song_id = params[:id]
+  @upvote = Upvote.new(user_id: user_id, song_id: song_id)
+  if @upvote.already_voted?
+    redirect '/songs'
+  else
+    @upvote.save
+    redirect '/songs'
+  end
+
 end
 
 # Find user, or create on if not found.
