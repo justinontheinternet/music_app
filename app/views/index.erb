@@ -1,1 +1,39 @@
-<h1>Home Page</h1>
+<% if current_user %>
+  <h1>Welcome, <%= current_user.user_name %></h1>
+  <h3><a href="/songs">See what's popular today</a></h3>
+<% else %>
+  <h1>Sign up to post new songs!</h1>
+  <h3>Already a member? Log in</h3>
+
+  <form class="form-horizontal" method="post" action="/validation">
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Username:</label>
+      <div class="col-sm-10">
+        <input type="text" name="user_name" class="form-control" id="inputEmail3" placeholder="Username" value="<%= @user.user_name %>">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Password:</label>
+      <div class="col-sm-10">
+        <input type="password" name="password" class="form-control" id="inputPassword3" placeholder="Password" value="<%= @user.password %>">
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-default">Sign up</button>
+      </div>
+    </div>
+  </form>
+
+  <% if @user.errors.any? %>
+    <div>
+      <strong>Uh oh:</strong>
+      <ul>
+        <% @user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<% end %>
